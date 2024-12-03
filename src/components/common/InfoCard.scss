@@ -1,0 +1,29 @@
+.info-card {
+  padding: 24px;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  &__icon {
+    margin-bottom: 16px;
+  }
+
+  &__count {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  &__description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}

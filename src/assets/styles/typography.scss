@@ -1,0 +1,86 @@
+// Font family
+$font-family: "Lato", sans-serif;
+
+// Font weights
+$regular: 400;
+$medium: 500;
+$semibold: 600;
+$bold: 700;
+
+// Heading styles
+@mixin h1 {
+  font-family: $font-family;
+  font-size: 32px;
+  line-height: 120%;
+  font-weight: $bold;
+}
+
+@mixin h2 {
+  font-family: $font-family;
+  font-size: 28px;
+  line-height: 130%;
+  font-weight: $medium;
+}
+
+@mixin h3 {
+  font-family: $font-family;
+  font-size: 24px;
+  line-height: 120%;
+  font-weight: $semibold;
+}
+
+@mixin h3-bold {
+  font-family: $font-family;
+  font-size: 24px;
+  line-height: 120%;
+  font-weight: $bold;
+}
+
+@mixin h3-medium {
+  font-family: $font-family;
+  font-size: 24px;
+  line-height: 120%;
+  font-weight: $medium;
+}
+
+@mixin h3-regular {
+  font-family: $font-family;
+  font-size: 24px;
+  line-height: 120%;
+  font-weight: $regular;
+}
+
+@mixin h4 {
+  font-family: $font-family;
+  font-size: 20px;
+  line-height: 120%;
+  font-weight: $regular;
+}
+
+@mixin h5 {
+  font-family: $font-family;
+  font-size: 18px;
+  line-height: 120%;
+  font-weight: $regular;
+}
+
+@mixin h5-medium {
+  font-family: $font-family;
+  font-size: 18px;
+  line-height: 120%;
+  font-weight: $medium;
+}
+
+@mixin h6 {
+  font-family: $font-family;
+  font-size: 16px;
+  line-height: 120%;
+  font-weight: $regular;
+}
+
+@mixin h6-medium {
+  font-family: $font-family;
+  font-size: 16px;
+  line-height: 120%;
+  font-weight: $medium;
+}

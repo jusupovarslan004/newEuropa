@@ -1,0 +1,31 @@
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    i {
+      color: var(--primary);
+      font-size: 20px;
+    }
+
+    a {
+      color: var(--text);
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+
+  &__phones {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}

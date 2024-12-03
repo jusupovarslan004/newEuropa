@@ -1,0 +1,153 @@
+.header {
+  height: 80px;
+  padding: 16px 0;
+  background: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    img {
+      height: 40px;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    gap: 24px;
+
+    a {
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.button {
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
+
+  &--primary {
+    background: var(--primary);
+    color: var(--white);
+
+    &:hover {
+      background: darken(#ff9b05, 10%);
+    }
+  }
+}
+
+.language-selector {
+  position: relative;
+
+  &__current {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+  }
+
+  &__flag {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  &__arrow {
+    color: #333;
+    transition: transform 0.2s;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    min-width: 150px;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease-in-out;
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.button {
+  &--primary {
+    background: #ff9b05;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 100px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: darken(#ff9b05, 5%);
+    }
+  }
+}

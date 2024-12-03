@@ -1,0 +1,11 @@
+@import "../assets/styles/typography.scss";
+
+.some-title {
+  @include h1;
+  color: var(--primary);
+}
+
+.some-subtitle {
+  @include h3-medium;
+  margin-bottom: 16px;
+}

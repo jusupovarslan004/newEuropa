@@ -1,0 +1,85 @@
+@import "./typography.scss";
+
+// Heading classes
+.h1 {
+  @include h1;
+}
+
+.h2 {
+  @include h2;
+}
+
+.h3 {
+  @include h3;
+
+  &--bold {
+    @include h3-bold;
+  }
+
+  &--medium {
+    @include h3-medium;
+  }
+
+  &--regular {
+    @include h3-regular;
+  }
+}
+
+.h4 {
+  @include h4;
+}
+
+.h5 {
+  @include h5;
+
+  &--medium {
+    @include h5-medium;
+  }
+}
+
+.h6 {
+  @include h6;
+
+  &--medium {
+    @include h6-medium;
+  }
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 992px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 576px;
+  }
+}
