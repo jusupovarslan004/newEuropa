@@ -15,53 +15,81 @@ const Header = () => {
   const { i18n } = useTranslation();
   const languageSelectorRef = useRef(null);
   const location = useLocation();
-
-  // Получаем сохраненный язык или используем русский по умолчанию
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState(() => {
     const saved = localStorage.getItem("language");
     const initial = languages.find((lang) => lang.code === saved);
     return initial || languages[0];
   });
-
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleLanguageChange = (lang) => {
-    setCurrentLang(lang);
-    setIsLangOpen(false);
-    localStorage.setItem("language", lang.code);
-    i18n.changeLanguage(lang.code);
-  };
-
+  // Закрываем меню при изменении маршрута
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        languageSelectorRef.current &&
-        !languageSelectorRef.current.contains(event.target)
-      ) {
-        setIsLangOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    // Прокрутка к началу страницы при изменении маршрута
+    setIsMenuOpen(false);
     window.scrollTo(0, 0);
   }, [location]);
 
-  // Добавьте функцию для прокрутки к футеру
+  // Блокируем скролл при открытом меню
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMenuOpen]);
+
   const scrollToFooter = (e) => {
-    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+    e.preventDefault();
     const footer = document.querySelector(".footer");
     if (footer) {
       footer.scrollIntoView({ behavior: "smooth" });
+      setIsMenuOpen(false);
     }
   };
+
+  const renderLanguageSelector = () => (
+    <div className="language-selector" ref={languageSelectorRef}>
+      <button
+        className="language-selector__current"
+        onClick={() => setIsLangOpen(!isLangOpen)}
+      >
+        <img
+          src={currentLang.flag}
+          alt={currentLang.code}
+          className="language-selector__flag"
+        />
+        <span>{currentLang.name}</span>
+        <svg
+          className={`language-selector__arrow ${isLangOpen ? "open" : ""}`}
+          width="10"
+          height="6"
+          viewBox="0 0 10 6"
+        >
+          <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      </button>
+
+      <div
+        className={`language-selector__dropdown ${isLangOpen ? "show" : ""}`}
+      >
+        {languages.map((lang) => (
+          <button
+            key={lang.code}
+            className="language-selector__option"
+            onClick={() => handleLanguageChange(lang)}
+          >
+            <img
+              src={lang.flag}
+              alt={lang.code}
+              className="language-selector__flag"
+            />
+            <span>{lang.name}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <header className="header">
@@ -70,72 +98,66 @@ const Header = () => {
           <img src={Logo} alt="Together recruitment" />
         </Link>
 
-        <nav className="header__nav">
-          <Link to="/about">О нас</Link>
-          <Link to="/vacancies">Вакансии</Link>
-          <a href="#" onClick={scrollToFooter}>
-            Наши контакты
-          </a>
-          <Link to="/partners">Для партнеров</Link>
-        </nav>
+        {/* Бургер кнопка */}
+        <button
+          className={`header__burger ${isMenuOpen ? "active" : ""}`}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-        <div className="header__actions">
-          <div className="language-selector" ref={languageSelectorRef}>
-            <button
-              className="language-selector__current"
-              onClick={() => setIsLangOpen(!isLangOpen)}
-            >
-              <img
-                src={currentLang.flag}
-                alt={currentLang.code}
-                className="language-selector__flag"
-              />
-              <span>{currentLang.name}</span>
-              <svg
-                className={`language-selector__arrow ${
-                  isLangOpen ? "open" : ""
-                }`}
-                width="10"
-                height="6"
-                viewBox="0 0 10 6"
+        {/* Мобильное меню */}
+        <div className={`header__mobile-overlay ${isMenuOpen ? "active" : ""}`}>
+          <div className={`header__mobile-menu ${isMenuOpen ? "active" : ""}`}>
+            <nav className="header__nav">
+              <Link to="/about">О нас</Link>
+              <Link to="/vacancies">Вакансии</Link>
+              <a href="#" onClick={scrollToFooter}>
+                Наши контакты
+              </a>
+              <Link to="/partners">Для партнеров</Link>
+            </nav>
+
+            <div className="header__actions header__actions--mobile">
+              {renderLanguageSelector()}
+              <button
+                className="button button--primary"
+                onClick={() => {
+                  setIsModalOpen(true);
+                  setIsMenuOpen(false);
+                }}
               >
-                <path
-                  d="M1 1L5 5L9 1"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-              </svg>
-            </button>
-
-            <div
-              className={`language-selector__dropdown ${
-                isLangOpen ? "show" : ""
-              }`}
-            >
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  className="language-selector__option"
-                  onClick={() => handleLanguageChange(lang)}
-                >
-                  <img
-                    src={lang.flag}
-                    alt={lang.code}
-                    className="language-selector__flag"
-                  />
-                  <span>{lang.name}</span>
-                </button>
-              ))}
+                Оставить заявку
+              </button>
             </div>
           </div>
-          <button
-            className="button button--primary"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Оставить заявку
-          </button>
+        </div>
+
+        {/* Десктопное меню */}
+        <div className="header__desktop">
+          <nav className="header__nav">
+            <Link to="/about">О нас</Link>
+            <Link to="/vacancies">Вакансии</Link>
+            <a href="#" onClick={scrollToFooter}>
+              Наши контакты
+            </a>
+            <Link to="/partners">Для партнеров</Link>
+          </nav>
+
+          <div className="header__actions">
+            {renderLanguageSelector()}
+            <button
+              className="button button--primary"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Оставить заявку
+            </button>
+          </div>
         </div>
       </div>
+
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
