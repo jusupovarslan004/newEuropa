@@ -1,19 +1,20 @@
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import "./Hero.scss";
-import heroBg1 from "../../../assets/images/hero-bg1.jpg";
-import heroBg2 from "../../../assets/images/hero-bg2.jpg";
+import heroBg1 from "../../../assets/images/heroBg1.jpg";
+import heroBg2 from "../../../assets/images/heroBg2.jpg";
+import heroBg3 from "../../../assets/images/heroBg3.jpg";
 import ContactModal from "../../common/Modal/ContactModal";
 
 const Hero = () => {
   const { t } = useTranslation();
   const [currentImage, setCurrentImage] = useState(0);
-  const images = [heroBg1, heroBg2];
+  const images = [heroBg1, heroBg2, heroBg3];
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev === 0 ? 1 : 0));
+      setCurrentImage((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     }, 5000);
 
     return () => clearInterval(interval);
