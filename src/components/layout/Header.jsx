@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./Header.scss";
 import Logo from "../../assets/images/logo.svg";
@@ -14,6 +14,7 @@ const languages = [
 const Header = () => {
   const { i18n } = useTranslation();
   const languageSelectorRef = useRef(null);
+  const location = useLocation();
 
   // Получаем сохраненный язык или используем русский по умолчанию
   const [currentLang, setCurrentLang] = useState(() => {
@@ -48,6 +49,20 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Прокрутка к началу страницы при изменении маршрута
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  // Добавьте функцию для прокрутки к футеру
+  const scrollToFooter = (e) => {
+    e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+    const footer = document.querySelector(".footer");
+    if (footer) {
+      footer.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -58,7 +73,9 @@ const Header = () => {
         <nav className="header__nav">
           <Link to="/about">О нас</Link>
           <Link to="/vacancies">Вакансии</Link>
-          <Link to="/contacts">Наши контакты</Link>
+          <a href="#" onClick={scrollToFooter}>
+            Наши контакты
+          </a>
           <Link to="/partners">Для партнеров</Link>
         </nav>
 

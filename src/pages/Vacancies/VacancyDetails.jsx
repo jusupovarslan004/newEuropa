@@ -7,10 +7,13 @@ import vacancy1 from "../../assets/images/vacancy1.jpg";
 import vacancy2 from "../../assets/images/vacancy2.jpg";
 import vacancy3 from "../../assets/images/vacancy3.jpg";
 import vacancy4 from "../../assets/images/vacancy4.jpg";
+import { useState } from "react";
+import ContactModal from "../../components/common/Modal/ContactModal";
 
 const VacancyDetails = () => {
   const { id } = useParams();
   const { t } = useTranslation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Данные текущей вакансии
   const vacancy = {
@@ -90,7 +93,12 @@ const VacancyDetails = () => {
               <p>{vacancy.description}</p>
             </div>
 
-            <button className="button button--primary">Оставить заявку</button>
+            <button
+              className="button button--primary"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Оставить заявку
+            </button>
           </div>
         </div>
 
@@ -121,6 +129,11 @@ const VacancyDetails = () => {
           </div>
         </div>
       </div>
+
+      <ContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
