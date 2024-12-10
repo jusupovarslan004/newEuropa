@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react";
-import "./Licenses.scss";
+import "./Gallery.scss";
 
-const Licenses = () => {
-  const [licenses, setLicenses] = useState([]);
+const Gallery = () => {
+  const [gallery, setGallery] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeDot, setActiveDot] = useState(0);
   const [error, setError] = useState(null);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [slidesPerView, setSlidesPerView] = useState(4);
+  const [slidesPerView, setSlidesPerView] = useState(3);
 
-  // Минимальное расстояние для свайпа
   const minSwipeDistance = 50;
 
   useEffect(() => {
-    fetch("http://16.170.234.16/api/v2/info/license/?format=json")
+    fetch("http://16.170.234.16/api/v2/info/gallery/?format=json")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -23,30 +22,30 @@ const Licenses = () => {
         return response.json();
       })
       .then((data) => {
-        setLicenses(data);
+        const duplicatedData = [...data, ...data, ...data];
+        setGallery(duplicatedData);
       })
       .catch((error) => {
-        console.error("Error fetching licenses:", error);
+        console.error("Error fetching gallery:", error);
         setError(error.message);
       });
   }, []);
 
-  // Добавляем определение мобильного устройства
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
       if (width > 1200) {
-        setSlidesPerView(4); // Десктоп
+        setSlidesPerView(3);
       } else if (width > 992) {
-        setSlidesPerView(3); // Большие планшеты
+        setSlidesPerView(2);
       } else if (width > 768) {
-        setSlidesPerView(2); // Планшеты
+        setSlidesPerView(2);
       } else {
-        setSlidesPerView(1); // Мобильные
+        setSlidesPerView(1);
       }
     };
 
-    handleResize(); // Вызываем сразу при монтировании
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -54,7 +53,7 @@ const Licenses = () => {
   const nextSlide = () => {
     setCurrentSlide((current) => {
       const next = current + 1;
-      return next >= licenses.length ? 0 : next;
+      return next >= gallery.length ? 0 : next;
     });
     setActiveDot((current) => (current + 1) % 3);
   };
@@ -62,7 +61,7 @@ const Licenses = () => {
   const prevSlide = () => {
     setCurrentSlide((current) => {
       if (current === 0) {
-        return licenses.length - 1;
+        return gallery.length - 1;
       }
       return current - 1;
     });
@@ -85,7 +84,6 @@ const Licenses = () => {
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -97,17 +95,16 @@ const Licenses = () => {
     }
   };
 
-  // Обновляем рендер слайдов
   const renderSlides = () => {
     return Array.from({ length: slidesPerView }).map((_, offset) => {
-      const slideIndex = (currentSlide + offset) % licenses.length;
+      const slideIndex = (currentSlide + offset) % gallery.length;
       return (
-        <div key={slideIndex} className="licenses__slide">
-          {licenses[slideIndex] && (
+        <div key={slideIndex} className="gallery__slide">
+          {gallery[slideIndex] && (
             <img
-              className="licenses__image"
-              src={licenses[slideIndex].license_api.replace(/[<>]/g, "")}
-              alt={`License ${slideIndex + 1}`}
+              className="gallery__image"
+              src={gallery[slideIndex].photo_api.replace(/[<>]/g, "")}
+              alt={`Gallery ${slideIndex + 1}`}
               onError={(e) => {
                 console.error("Error loading image:", e);
                 e.target.src = "placeholder.jpg";
@@ -119,36 +116,31 @@ const Licenses = () => {
     });
   };
 
-  if (error) {
-    return <div>Error loading licenses: {error}</div>;
-  }
-
-  if (licenses.length === 0) {
-    return <div>Loading...</div>;
-  }
+  if (error) return <div>Error loading gallery: {error}</div>;
+  if (gallery.length === 0) return <div>Loading...</div>;
 
   return (
-    <section className="licenses">
-      <div className="licenses__container">
-        <h2 className="licenses__title">Лицензии</h2>
+    <section className="gallery">
+      <div className="gallery__container">
+        <h2 className="gallery__title">Галерея</h2>
         <div
-          className="licenses__slider"
+          className="gallery__slider"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           {renderSlides()}
 
-          {slidesPerView > 1 && licenses.length > slidesPerView && (
+          {slidesPerView > 1 && gallery.length > slidesPerView && (
             <>
               <button
-                className="licenses__nav-button licenses__nav-button--prev"
+                className="gallery__nav-button gallery__nav-button--prev"
                 onClick={prevSlide}
               >
                 ←
               </button>
               <button
-                className="licenses__nav-button licenses__nav-button--next"
+                className="gallery__nav-button gallery__nav-button--next"
                 onClick={nextSlide}
               >
                 →
@@ -157,12 +149,12 @@ const Licenses = () => {
           )}
         </div>
 
-        <div className="licenses__dots">
+        <div className="gallery__dots">
           {[0, 1, 2].map((index) => (
             <div
               key={index}
-              className={`licenses__dot ${
-                activeDot === index ? "licenses__dot--active" : ""
+              className={`gallery__dot ${
+                activeDot === index ? "gallery__dot--active" : ""
               }`}
               onClick={() => goToSlide(index)}
               role="button"
@@ -175,4 +167,4 @@ const Licenses = () => {
   );
 };
 
-export default Licenses;
+export default Gallery;
