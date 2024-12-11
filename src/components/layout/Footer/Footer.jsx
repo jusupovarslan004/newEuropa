@@ -48,13 +48,12 @@ const Footer = () => {
 
           <div className="footer__map">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.4861585532584!2d74.56474597677608!3d42.87508397124424!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389ec9b7f76b9e99%3A0x8d5833814471b208!2z0YPQuy4g0JrRg9C70LDRgtC-0LLQsCAxMzksINCR0LjRiNC60LXQug!5e0!3m2!1sru!2skg!4v1709729844949!5m2!1sru!2skg"
+              src="https://widgets.2gis.com/widget?type=firmsonmap&options=%7B%22pos%22%3A%7B%22lat%22%3A42.8807128066996%2C%22lon%22%3A74.59485054016115%2C%22zoom%22%3A16%7D%2C%22opt%22%3A%7B%22city%22%3A%22bishkek%22%7D%2C%22org%22%3A%2270000001095143728%22%7D"
               width="100%"
               height="100%"
+              frameBorder="0"
               style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
             />
           </div>
         </div>
