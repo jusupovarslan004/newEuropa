@@ -14,7 +14,7 @@ const Gallery = () => {
   const minSwipeDistance = 50;
 
   useEffect(() => {
-    fetch("http://16.170.234.16/api/v2/info/gallery/?format=json")
+    fetch("/api/v2/info/gallery/?format=json")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
