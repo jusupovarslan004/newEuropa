@@ -124,16 +124,23 @@ const Licenses = () => {
     });
   };
 
-  if (error) {
+  if (error || licenses.length === 0) {
     return (
-      <div>
-        {t("licenses.errorLoading")}: {error}
-      </div>
+      <section className="licenses">
+        <div className="licenses__container">
+          <h2 className="licenses__title">{t("licenses.title")}</h2>
+          <div className="licenses__placeholder">
+            <div className="licenses__placeholder-icon">📄</div>
+            <h3 className="licenses__placeholder-title">
+              {t("licenses.noLicenses")}
+            </h3>
+            <p className="licenses__placeholder-text">
+              {t("licenses.comingSoon")}
+            </p>
+          </div>
+        </div>
+      </section>
     );
-  }
-
-  if (licenses.length === 0) {
-    return <div>{t("licenses.loading")}</div>;
   }
 
   return (
