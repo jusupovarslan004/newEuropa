@@ -119,5 +119,8 @@
     "previousSlide": "Previous slide",
     "nextSlide": "Next slide",
     "goToSlide": "Go to slide group {{number}}"
+  },
+  "about": {
+    "title": "About us"
   }
 }
