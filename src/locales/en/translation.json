@@ -104,7 +104,9 @@
     "errorLoading": "Error loading licenses",
     "previousSlide": "Previous slide",
     "nextSlide": "Next slide",
-    "goToSlide": "Go to slide group {{number}}"
+    "goToSlide": "Go to slide group {{number}}",
+    "noLicenses": "Licenses Section is Being Updated",
+    "comingSoon": "Information about our licenses will appear here soon"
   },
   "partnership": {
     "title": "Want to partner with us?",
