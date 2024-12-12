@@ -5,7 +5,7 @@
   background-color: var(--white);
 
   .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 24px;
 
@@ -38,7 +38,7 @@
     gap: 60px;
     align-items: center;
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1300px) {
       gap: 40px;
     }
 
@@ -95,7 +95,7 @@
         transform: scale(1.05);
       }
 
-      @media (max-width: 1200px) {
+      @media (max-width: 1300px) {
         height: 350px;
       }
 
@@ -182,7 +182,7 @@
 
   &__wrapper {
     position: relative;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 20px;
   }
@@ -262,7 +262,7 @@
 }
 
 // Медиа-запросы для адаптивности
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
   .licenses__slide {
     flex: 0 0 calc(100% / 3);
   }

@@ -40,7 +40,7 @@ const Licenses = () => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width > 1200) {
+      if (width > 1300) {
         setSlidesPerView(4); // Десктоп
       } else if (width > 992) {
         setSlidesPerView(3); // Большие планшеты

@@ -36,7 +36,7 @@ const Gallery = () => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width > 1200) {
+      if (width > 1300) {
         setSlidesPerView(3);
       } else if (width > 992) {
         setSlidesPerView(2);
