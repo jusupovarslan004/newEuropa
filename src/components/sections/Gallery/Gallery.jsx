@@ -118,13 +118,24 @@ const Gallery = () => {
     });
   };
 
-  if (error)
+  if (error || gallery.length === 0) {
     return (
-      <div>
-        {t("gallery.errorLoading")}: {error}
-      </div>
+      <section className="gallery">
+        <div className="gallery__container">
+          <h2 className="gallery__title">{t("gallery.title")}</h2>
+          <div className="gallery__placeholder">
+            <div className="gallery__placeholder-icon">📸</div>
+            <h3 className="gallery__placeholder-title">
+              {t("gallery.noImages")}
+            </h3>
+            <p className="gallery__placeholder-text">
+              {t("gallery.comingSoon")}
+            </p>
+          </div>
+        </div>
+      </section>
     );
-  if (gallery.length === 0) return <div>{t("gallery.loading")}</div>;
+  }
 
   return (
     <section className="gallery">
