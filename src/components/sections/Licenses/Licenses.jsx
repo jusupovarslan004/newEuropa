@@ -15,7 +15,7 @@ const Licenses = () => {
   const minSwipeDistance = 50;
 
   useEffect(() => {
-    fetch("/api/v2/info/license/?format=json")
+    fetch("/api/v2/info/license")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -31,7 +31,7 @@ const Licenses = () => {
       });
   }, []);
 
-  // Добавляем определение мобильного устройства
+  // Добавляем определение мобильного устрой��тва
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -102,7 +102,7 @@ const Licenses = () => {
     return Array.from({ length: slidesPerView }).map((_, offset) => {
       const slideIndex = (currentSlide + offset) % licenses.length;
       return (
-        <div key={slideIndex} className="licenses__slide">
+        <div key={`license-${slideIndex}`} className="licenses__slide">
           {licenses[slideIndex] && (
             <img
               className="licenses__image"

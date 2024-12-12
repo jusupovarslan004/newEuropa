@@ -1,0 +1,101 @@
+{
+  "header": {
+    "about": "About us",
+    "vacancies": "Vacancies",
+    "contacts": "Our contacts",
+    "partners": "For partners",
+    "submitRequest": "Submit request"
+  },
+  "forms": {
+    "partners": {
+      "title": "Fill in these details to collaborate with us!",
+      "fullName": "Your full name",
+      "fullNamePlaceholder": "Enter your name",
+      "phone": "Your phone number",
+      "phonePlaceholder": "+996...",
+      "company": "Company name",
+      "companyPlaceholder": "Enter your company name",
+      "position": "Your position",
+      "positionPlaceholder": "Enter your position in the company",
+      "address": "Your address",
+      "addressPlaceholder": "Enter your company address",
+      "email": "Your email",
+      "emailPlaceholder": "Enter your email",
+      "message": "Your message",
+      "messagePlaceholder": "Enter your message for us",
+      "submit": "Submit",
+      "sending": "Sending...",
+      "errorCheck": "Please check the entered data and try again"
+    },
+    "contact": {
+      "title": "Submit an application and we will contact you!",
+      "fullName": "Your full name",
+      "fullNamePlaceholder": "Enter full name",
+      "phone": "Your phone number",
+      "phonePlaceholder": "+996...",
+      "country": "Country you want to apply to",
+      "countryPlaceholder": "Enter country",
+      "city": "Your city",
+      "cityPlaceholder": "Enter city",
+      "submit": "Submit application"
+    }
+  },
+  "howWeWork": {
+    "title": "How do we work?",
+    "steps": {
+      "1": {
+        "title": "Consultation",
+        "description": "We help select a suitable vacancy and provide complete information about employment."
+      },
+      "2": {
+        "title": "Document Processing",
+        "description": "We ensure the preparation and submission of all necessary documents for employment."
+      },
+      "3": {
+        "title": "Work Invitation",
+        "description": "We prepare an official invitation from the employer for visa processing."
+      },
+      "4": {
+        "title": "Visa Support",
+        "description": "We assist in obtaining a work visa and residence permit for legal employment and stay."
+      }
+    }
+  },
+  "stats": {
+    "title": "Our Statistics",
+    "items": {
+      "1": {
+        "number": "1,200",
+        "label": "Employees in Europe",
+        "description": "employees successfully working"
+      },
+      "2": {
+        "number": "50",
+        "label": "Available Vacancies",
+        "description": "vacancies every month"
+      },
+      "3": {
+        "number": "2,000",
+        "label": "Visas Issued",
+        "description": "visas processed"
+      },
+      "4": {
+        "number": "30",
+        "label": "Partner Companies",
+        "description": "European companies trust us"
+      },
+      "5": {
+        "number": "3",
+        "label": "Company Experience",
+        "description": "years of successful work"
+      }
+    }
+  },
+  "hero": {
+    "title": "Working abroad is easy and simple!",
+    "description": "We will help you find a job in Europe and process all necessary documents. Our team of professionals will make the employment process as comfortable as possible for you."
+  },
+  "common": {
+    "leaveRequest": "Submit Request"
+  }
+}

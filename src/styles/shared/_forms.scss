@@ -1,0 +1,22 @@
+.error-message {
+  color: #d32f2f;
+  font-size: 14px;
+  margin-top: 4px;
+  padding: 8px;
+  background-color: rgba(211, 47, 47, 0.1);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.form-group {
+  &.has-error {
+    input {
+      border-color: #d32f2f;
+
+      &:focus {
+        border-color: #d32f2f;
+        box-shadow: 0 0 0 1px rgba(211, 47, 47, 0.2);
+      }
+    }
+  }
+}

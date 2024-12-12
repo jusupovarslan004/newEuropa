@@ -12,7 +12,7 @@ const languages = [
 ];
 
 const Header = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const languageSelectorRef = useRef(null);
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,6 +46,13 @@ const Header = () => {
       footer.scrollIntoView({ behavior: "smooth" });
       setIsMenuOpen(false);
     }
+  };
+
+  const handleLanguageChange = (lang) => {
+    setCurrentLang(lang);
+    i18n.changeLanguage(lang.code);
+    localStorage.setItem("language", lang.code);
+    setIsLangOpen(false);
   };
 
   const renderLanguageSelector = () => (
@@ -112,12 +119,12 @@ const Header = () => {
         <div className={`header__mobile-overlay ${isMenuOpen ? "active" : ""}`}>
           <div className={`header__mobile-menu ${isMenuOpen ? "active" : ""}`}>
             <nav className="header__nav">
-              <Link to="/about">О нас</Link>
-              <Link to="/vacancies">Вакансии</Link>
+              <Link to="/about">{t("header.about")}</Link>
+              <Link to="/vacancies">{t("header.vacancies")}</Link>
               <a href="#" onClick={scrollToFooter}>
-                Наши контакты
+                {t("header.contacts")}
               </a>
-              <Link to="/partners">Для партнеров</Link>
+              <Link to="/partners">{t("header.partners")}</Link>
             </nav>
 
             <div className="header__actions header__actions--mobile">
@@ -129,7 +136,7 @@ const Header = () => {
                   setIsMenuOpen(false);
                 }}
               >
-                Оставить заявку
+                {t("header.submitRequest")}
               </button>
             </div>
           </div>
@@ -138,12 +145,12 @@ const Header = () => {
         {/* Десктопное меню */}
         <div className="header__desktop">
           <nav className="header__nav">
-            <Link to="/about">О нас</Link>
-            <Link to="/vacancies">Вакансии</Link>
+            <Link to="/about">{t("header.about")}</Link>
+            <Link to="/vacancies">{t("header.vacancies")}</Link>
             <a href="#" onClick={scrollToFooter}>
-              Наши контакты
+              {t("header.contacts")}
             </a>
-            <Link to="/partners">Для партнеров</Link>
+            <Link to="/partners">{t("header.partners")}</Link>
           </nav>
 
           <div className="header__actions">
@@ -152,7 +159,7 @@ const Header = () => {
               className="button button--primary"
               onClick={() => setIsModalOpen(true)}
             >
-              Оставить заявку
+              {t("header.submitRequest")}
             </button>
           </div>
         </div>

@@ -6,29 +6,29 @@ const Statistics = () => {
 
   const stats = [
     {
-      number: "5980",
-      label: t("stats.workers"),
-      description: t("stats.workersDesc"),
+      number: t("stats.items.1.number"),
+      label: t("stats.items.1.label"),
+      description: t("stats.items.1.description"),
     },
     {
-      number: "5980",
-      label: t("stats.workers"),
-      description: t("stats.workersDesc"),
+      number: t("stats.items.2.number"),
+      label: t("stats.items.2.label"),
+      description: t("stats.items.2.description"),
     },
     {
-      number: "5980",
-      label: t("stats.workers"),
-      description: t("stats.workersDesc"),
+      number: t("stats.items.3.number"),
+      label: t("stats.items.3.label"),
+      description: t("stats.items.3.description"),
     },
     {
-      number: "5980",
-      label: t("stats.workers"),
-      description: t("stats.workersDesc"),
+      number: t("stats.items.4.number"),
+      label: t("stats.items.4.label"),
+      description: t("stats.items.4.description"),
     },
     {
-      number: "5980",
-      label: t("stats.workers"),
-      description: t("stats.workersDesc"),
+      number: t("stats.items.5.number"),
+      label: t("stats.items.5.label"),
+      description: t("stats.items.5.description"),
     },
   ];
 

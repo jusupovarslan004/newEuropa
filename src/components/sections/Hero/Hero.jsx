@@ -34,17 +34,10 @@ const Hero = () => {
       <div className="hero__overlay" />
       <div className="hero__container">
         <div className="hero__content">
-          <h1 className="hero__title">
-            {t("hero.title", "Работать за границей - это легко и просто!")}
-          </h1>
-          <p className="hero__description">
-            {t(
-              "hero.description",
-              "Lorem ipsum dolor sit amet consectetur. Urna gravida lectus diam etiam. Mi ultrices porttitor orci quam porta commodo. Tincidunt eget scelerisque aliquam elit mauris feugiat id."
-            )}
-          </p>
+          <h1 className="hero__title">{t("hero.title")}</h1>
+          <p className="hero__description">{t("hero.description")}</p>
           <button className="hero__button" onClick={() => setIsModalOpen(true)}>
-            {t("common.leaveRequest", "Оставить заявку")}
+            {t("common.leaveRequest")}
           </button>
         </div>
       </div>

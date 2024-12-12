@@ -34,7 +34,7 @@ const About = () => {
 
         <div className="about__grid">
           {aboutData.map((section, index) => (
-            <>
+            <React.Fragment key={index}>
               <div className="about__text">
                 <p>{section.text}</p>
               </div>
@@ -44,7 +44,7 @@ const About = () => {
                   alt={section.title || `About section ${index + 1}`}
                 />
               </div>
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>
