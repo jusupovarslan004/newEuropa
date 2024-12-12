@@ -1,7 +1,12 @@
+import React from "react";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
 import "./Licenses.scss";
 
 const Licenses = () => {
+  const { t } = useTranslation();
+
   const [licenses, setLicenses] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeDot, setActiveDot] = useState(0);
@@ -31,7 +36,7 @@ const Licenses = () => {
       });
   }, []);
 
-  // Добавляем определение мобильного устрой��тва
+  // Добавляем определение мобильного устройства
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -120,17 +125,21 @@ const Licenses = () => {
   };
 
   if (error) {
-    return <div>Error loading licenses: {error}</div>;
+    return (
+      <div>
+        {t("licenses.errorLoading")}: {error}
+      </div>
+    );
   }
 
   if (licenses.length === 0) {
-    return <div>Loading...</div>;
+    return <div>{t("licenses.loading")}</div>;
   }
 
   return (
     <section className="licenses">
       <div className="licenses__container">
-        <h2 className="licenses__title">Лицензии</h2>
+        <h2 className="licenses__title">{t("licenses.title")}</h2>
         <div
           className="licenses__slider"
           onTouchStart={onTouchStart}
@@ -144,12 +153,14 @@ const Licenses = () => {
               <button
                 className="licenses__nav-button licenses__nav-button--prev"
                 onClick={prevSlide}
+                aria-label={t("licenses.previousSlide")}
               >
                 ←
               </button>
               <button
                 className="licenses__nav-button licenses__nav-button--next"
                 onClick={nextSlide}
+                aria-label={t("licenses.nextSlide")}
               >
                 →
               </button>
@@ -166,7 +177,7 @@ const Licenses = () => {
               }`}
               onClick={() => goToSlide(index)}
               role="button"
-              aria-label={`Go to slide group ${index + 1}`}
+              aria-label={t("licenses.goToSlide", { number: index + 1 })}
             />
           ))}
         </div>

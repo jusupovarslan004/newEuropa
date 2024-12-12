@@ -20,7 +20,7 @@
       "address": "Ваш адрес",
       "addressPlaceholder": "Введите адрес вашей компании",
       "email": "Ваш email",
-      "emailPlaceholder": "Введите вашу электр��ую почту",
+      "emailPlaceholder": "Введите вашу электрю почту",
       "message": "Ваше сообщение",
       "messagePlaceholder": "Введите ваше сообщение для нас",
       "submit": "Отправить",
@@ -97,5 +97,27 @@
   },
   "common": {
     "leaveRequest": "Оставить заявку"
+  },
+  "licenses": {
+    "title": "Лицензии",
+    "loading": "Загрузка...",
+    "errorLoading": "Ошибка загрузки лицензий",
+    "previousSlide": "Предыдущий слайд",
+    "nextSlide": "Следующий слайд",
+    "goToSlide": "Перейти к группе слайдов {{number}}"
+  },
+  "partnership": {
+    "title": "Хотите сотрудничать с нами?",
+    "description": "Заполните заявку для партнеров и мы с вами свяжемся в скором времени",
+    "button": "Связаться с нами",
+    "iconAlt": "Рукопожатие"
+  },
+  "gallery": {
+    "title": "Галерея",
+    "loading": "Загрузка...",
+    "errorLoading": "Ошибка при загрузке галереи",
+    "previousSlide": "Предыдущий слайд",
+    "nextSlide": "Следующий слайд",
+    "goToSlide": "Перейти к группе слайдов {{number}}"
   }
 }

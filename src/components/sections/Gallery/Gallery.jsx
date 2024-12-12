@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "./Gallery.scss";
 
 const Gallery = () => {
+  const { t } = useTranslation();
   const [gallery, setGallery] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeDot, setActiveDot] = useState(0);
@@ -116,13 +118,18 @@ const Gallery = () => {
     });
   };
 
-  if (error) return <div>Error loading gallery: {error}</div>;
-  if (gallery.length === 0) return <div>Loading...</div>;
+  if (error)
+    return (
+      <div>
+        {t("gallery.errorLoading")}: {error}
+      </div>
+    );
+  if (gallery.length === 0) return <div>{t("gallery.loading")}</div>;
 
   return (
     <section className="gallery">
       <div className="gallery__container">
-        <h2 className="gallery__title">Галерея</h2>
+        <h2 className="gallery__title">{t("gallery.title")}</h2>
         <div
           className="gallery__slider"
           onTouchStart={onTouchStart}
@@ -136,12 +143,14 @@ const Gallery = () => {
               <button
                 className="gallery__nav-button gallery__nav-button--prev"
                 onClick={prevSlide}
+                aria-label={t("gallery.previousSlide")}
               >
                 ←
               </button>
               <button
                 className="gallery__nav-button gallery__nav-button--next"
                 onClick={nextSlide}
+                aria-label={t("gallery.nextSlide")}
               >
                 →
               </button>
@@ -158,7 +167,7 @@ const Gallery = () => {
               }`}
               onClick={() => goToSlide(index)}
               role="button"
-              aria-label={`Go to slide group ${index + 1}`}
+              aria-label={t("gallery.goToSlide", { number: index + 1 })}
             />
           ))}
         </div>

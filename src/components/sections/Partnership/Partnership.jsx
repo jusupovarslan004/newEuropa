@@ -10,19 +10,17 @@ const Partnership = () => {
   return (
     <section className="partnership">
       <div className="container">
-        <h2 className="partnership__title">Хотите сотрудничать с нами?</h2>
+        <h2 className="partnership__title">{t("partnership.title")}</h2>
         <div className="partnership__card">
-          <p className="partnership__text">
-            Заполните заявку для партнеров и мы с вами свяжемся в скором времени
-          </p>
+          <p className="partnership__text">{t("partnership.description")}</p>
           <div className="partnership__icon">
-            <img src={handshakeIcon} alt="handshake" />
+            <img src={handshakeIcon} alt={t("partnership.iconAlt")} />
           </div>
           <button
             className="partnership__button"
             onClick={() => navigate("/partners")}
           >
-            Связаться с нами
+            {t("partnership.button")}
           </button>
         </div>
       </div>

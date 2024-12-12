@@ -97,5 +97,27 @@
   },
   "common": {
     "leaveRequest": "Submit Request"
+  },
+  "licenses": {
+    "title": "Licenses",
+    "loading": "Loading...",
+    "errorLoading": "Error loading licenses",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "goToSlide": "Go to slide group {{number}}"
+  },
+  "partnership": {
+    "title": "Want to partner with us?",
+    "description": "Fill out the partner application and we will contact you soon",
+    "button": "Contact us",
+    "iconAlt": "Handshake"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "loading": "Loading...",
+    "errorLoading": "Error loading gallery",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "goToSlide": "Go to slide group {{number}}"
   }
 }
