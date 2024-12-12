@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://16.170.234.16",
+        target: "https://api.togetherrecruitment.kg/",
         changeOrigin: true,
         secure: false,
       },
