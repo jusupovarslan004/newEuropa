@@ -124,5 +124,25 @@
   },
   "about": {
     "title": "About us"
+  },
+  "vacancies": {
+    "search": {
+      "placeholder": "Search vacancies..."
+    },
+    "filters": {
+      "all_countries": "All countries"
+    },
+    "labels": {
+      "program": "Program",
+      "salary": "Salary",
+      "specialization": "Specialization",
+      "country": "Country",
+      "age": "Age",
+      "place": "Available positions",
+      "uploaded_at": "Published date"
+    },
+    "no_results": "No vacancies found",
+    "loading": "Loading vacancies...",
+    "error": "Error loading vacancies"
   }
 }

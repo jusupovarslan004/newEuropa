@@ -6,38 +6,49 @@ import "./VacanciesPage.scss";
 import searchIcon from "../../assets/icons/search.svg";
 
 const VacanciesPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [search, setSearch] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [vacancies, setVacancies] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [countries, setCountries] = useState([]); // Список стран
+  const [countries, setCountries] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchVacancies = async () => {
+      const currentLang = i18n.language === "kg" ? "ky" : i18n.language;
       try {
+        setIsLoading(true);
         const response = await fetch(
-          "https://api.togetherrecruitment.kg/api/v2/info/vacancies"
+          `https://api.togetherrecruitment.kg/api/v2/info/vacancies/?lang=${currentLang}`
         );
         const data = await response.json();
-        setVacancies(data.results); // Устанавливаем вакансии из ответа
-        setTotalPages(Math.ceil(data.results.length / 8)); // Устанавливаем общее количество страниц
+        setVacancies(data.results || []);
+        setTotalPages(Math.ceil((data.results?.length || 0) / 8));
 
-        // Генерация уникального списка стран
         const uniqueCountries = [
           ...new Set(
-            data.results.map((vacancy) => vacancy.country).filter(Boolean)
+            (data.results || [])
+              .map((vacancy) => vacancy?.country)
+              .filter(Boolean)
           ),
         ];
-        setCountries(uniqueCountries); // Сохраняем уникальные страны
+        setCountries(uniqueCountries);
       } catch (error) {
-        console.error("Ошибка при получении вакансий:", error);
+        console.error("Error fetching vacancies:", error);
+        setVacancies([]);
+        setTotalPages(0);
+        setCountries([]);
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    fetchVacancies(); // Вызываем функцию для получения вакансий
-  }, []);
+    fetchVacancies();
+  }, [i18n.language]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -83,7 +94,7 @@ const VacanciesPage = () => {
             <div className="search-bar__input-wrapper">
               <input
                 type="text"
-                placeholder={t("search.placeholder")}
+                placeholder={t("vacancies.search.placeholder")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="search-bar__input"
@@ -96,7 +107,7 @@ const VacanciesPage = () => {
                 onChange={(e) => setSelectedCountry(e.target.value)}
                 className="search-bar__select"
               >
-                <option value="all">{t("countries.all")}</option>
+                <option value="all">{t("vacancies.filters.all_countries")}</option>
                 {countries.map((country, index) => (
                   <option value={country} key={index}>
                     {country}
@@ -117,32 +128,42 @@ const VacanciesPage = () => {
               className="vacancy-card"
             >
               <div className="vacancy-card__image">
-                {vacancy.img_api ? (
-                  <img src={vacancy.img_api} alt={vacancy.title} />
-                ) : (
-                  <div className="vacancy-card__placeholder">
-                    {t("image.not_available")}
-                  </div>
-                )}
+                <img src={vacancy.img_api || vacancy.img} alt={vacancy.title} />
               </div>
               <div className="vacancy-card__content">
-                <div className="vacancy-card__date">
-                  {formatDate(vacancy.uploaded_at)}
+                <div className="vacancy-card__main">
+                  <h3 className="vacancy-card__title">{vacancy.title}</h3>
+                  <div className="vacancy-card__details">
+                    <div className="vacancy-card__info-group">
+                      <strong>{t("vacancies.labels.country")}: </strong>
+                      <span>{vacancy.country}</span>
+                    </div>
+                    <div className="vacancy-card__info-group">
+                      <strong>{t("vacancies.labels.program")}: </strong>
+                      <span>{vacancy.program}</span>
+                    </div>
+                    <div className="vacancy-card__info-group">
+                      <strong>{t("vacancies.labels.specialization")}: </strong>
+                      <span>{vacancy.specialization}</span>
+                    </div>
+                    <div className="vacancy-card__info-group">
+                      <strong>{t("vacancies.labels.salary")}: </strong>
+                      <span>{vacancy.salary}</span>
+                    </div>
+                    <div className="vacancy-card__info-group">
+                      <strong>{t("vacancies.labels.age")}: </strong>
+                      <span>{vacancy.age}</span>
+                    </div>
+                    <div className="vacancy-card__info-group">
+                      <strong>{t("vacancies.labels.place")}: </strong>
+                      <span>{vacancy.place}</span>
+                    </div>
+                    <div className="vacancy-card__info-group">
+                      <strong>{t("vacancies.labels.uploaded_at")}: </strong>
+                      <span>{formatDate(vacancy.uploaded_at)}</span>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="vacancy-card__title">{vacancy.title}</h3>
-                <p className="vacancy-card__requirements">{vacancy.text}</p>
-                <p className="vacancy-card__country">
-                  {t("countries.label")}: {vacancy.country}
-                </p>
-                <p className="vacancy-card__program">
-                  {t("program.label")}: {vacancy.program}
-                </p>
-                <p className="vacancy-card__specialization">
-                  {t("specialization.label")}: {vacancy.specialization}
-                </p>
-                <p className="vacancy-card__salary">
-                  {t("salary.label")}: {vacancy.salary}
-                </p>
               </div>
             </Link>
           ))}
@@ -156,6 +177,12 @@ const VacanciesPage = () => {
           />
         </div>
       </div>
+
+      {isLoading && <p>{t("vacancies.loading")}</p>}
+      {error && <p>{t("vacancies.error")}</p>}
+      {!isLoading && !error && vacancies.length === 0 && (
+        <p>{t("vacancies.no_results")}</p>
+      )}
     </div>
   );
 };
