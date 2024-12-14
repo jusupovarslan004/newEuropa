@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./Header.scss";
-import Logo from "../../assets/images/logo.svg";
-import ContactModal from "../common/Modal/ContactModal";
+import Logo from "../../../assets/images/logo.svg";
+import ContactModal from "../../common/Modal/ContactModal";
 
 const languages = [
   { code: "ru", name: "Русский", flag: "/images/flags/ru.svg" },
