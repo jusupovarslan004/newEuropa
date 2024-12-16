@@ -291,5 +291,13 @@
         "close": "Close"
       }
     }
+  },
+  "footer": {
+    "contacts": "Contacts",
+    "nav": {
+      "about": "About",
+      "vacancies": "Vacancies",
+      "partners": "For Partners"
+    }
   }
 }

@@ -1,11 +1,35 @@
 import { Link } from "react-router-dom";
 import "./Footer.scss";
 import logo from "../../../assets/images/logo.svg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useTranslation } from "react-i18next";
+
+// Временные импорты локальных иконок
 import emailIcon from "../../../assets/icons/email.svg";
-import phoneIcon from "../../../assets/icons/phone.svg";
-import locationIcon from "../../../assets/icons/location.svg";
+import phoneIcon from "../../../assets/icons/mobile.svg";
+import locationIcon from "../../../assets/icons/office.svg";
+import telegramIcon from "../../../assets/icons/telegram.svg";
+import whatsappIcon from "../../../assets/icons/whatsapp.svg";
+import instagramIcon from "../../../assets/icons/instagram.svg";
 
 const Footer = () => {
+  const [contactData, setContactData] = useState(null);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const response = await axios.get('https://api.togetherrecruitment.kg/api/v2/info/contacts/');
+        setContactData(response.data[0]);
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+      }
+    };
+
+    fetchContacts();
+  }, []);
+
   return (
     <footer className="footer">
       <div className="container">
@@ -15,35 +39,93 @@ const Footer = () => {
           </div>
 
           <div className="footer__nav">
-            <Link to="/about">О нас</Link>
-            <Link to="/vacancies">Вакансии</Link>
-            <Link to="/partners">Для партнеров</Link>
+            <h3>{t('footer.nav.about')}</h3>
+            <Link to="/about">{t('footer.nav.about')}</Link>
+            <Link to="/vacancies">{t('footer.nav.vacancies')}</Link>
+            <Link to="/partners">{t('footer.nav.partners')}</Link>
           </div>
 
           <div className="footer__contacts">
-            <div className="footer__contact-item">
-              <div className="footer__contact-icon">
-                <img src={emailIcon} alt="Email" />
+            <h3>{t('footer.contacts')}</h3>
+            {/* Email */}
+            {contactData?.mail && (
+              <div className="footer__contact-item">
+                <div className="footer__contact-icon">
+                  {/* <img src={contactData.img_svg_api} alt="Email" /> */}
+                  <img src={emailIcon} alt="Email" />
+                </div>
+                <a href={`mailto:${contactData.mail}`}>{contactData.mail}</a>
               </div>
-              <a href="mailto:europework@gmail.com">europework@gmail.com</a>
-            </div>
+            )}
 
-            <div className="footer__contact-item">
-              <div className="footer__contact-icon">
-                <img src={phoneIcon} alt="Phone" />
+            {/* Контакты */}
+            {contactData?.Контакты?.map((contact) => (
+              <div key={contact.id} className="footer__contact-item">
+                <div className="footer__contact-icon">
+                  {/* <img src={contact.img_svg_api} alt="Phone" /> */}
+                  <img src={phoneIcon} alt="Phone" />
+                </div>
+                <div className="footer__phone-numbers">
+                  <a href={`tel:${contact.phone}`}>{contact.phone}</a>
+                </div>
               </div>
-              <div className="footer__phone-numbers">
-                <a href="tel:+996705254855">+996 705 254 855</a>
-                <a href="tel:+996705959855">+996 705 959 855</a>
-              </div>
-            </div>
+            ))}
 
-            <div className="footer__contact-item">
-              <div className="footer__contact-icon">
-                <img src={locationIcon} alt="Location" />
+            {/* Офисы */}
+            {contactData?.offices?.map((office) => (
+              <div key={office.id} className="footer__contact-item">
+                <div className="footer__contact-icon">
+                  {/* <img src={office.img_svg_api} alt="Location" /> */}
+                  <img src={locationIcon} alt="Location" />
+                </div>
+                <a 
+                  href="https://go.2gis.com/er2bd" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  {office.address}
+                </a>
               </div>
-              <span>Кулатова 139/6</span>
-            </div>
+            ))}
+
+            {/* Telegram */}
+            {contactData?.telegram?.map((item) => (
+              <div key={item.id} className="footer__contact-item">
+                <div className="footer__contact-icon">
+                  {/* <img src={item.img_svg_api} alt="Telegram" /> */}
+                  <img src={telegramIcon} alt="Telegram" />
+                </div>
+                <a href={`https://t.me/${item.telegram.replace('@', '')}`}>
+                  {item.telegram}
+                </a>
+              </div>
+            ))}
+
+            {/* WhatsApp */}
+            {contactData?.whatsapp?.map((item) => (
+              <div key={item.id} className="footer__contact-item">
+                <div className="footer__contact-icon">
+                  {/* <img src={item.img_svg_api} alt="WhatsApp" /> */}
+                  <img src={whatsappIcon} alt="WhatsApp" />
+                </div>
+                <a href={`https://wa.me/${item.whatsapp}`}>
+                  {item.whatsapp}
+                </a>
+              </div>
+            ))}
+
+            {/* Instagram */}
+            {contactData?.instagram?.map((item) => (
+              <div key={item.id} className="footer__contact-item">
+                <div className="footer__contact-icon">
+                  {/* <img src={item.img_svg_api} alt="Instagram" /> */}
+                  <img src={instagramIcon} alt="Instagram" />
+                </div>
+                <a href={item.instagram} target="_blank" rel="noopener noreferrer">
+                  Instagram
+                </a>
+              </div>
+            ))}
           </div>
 
           <div className="footer__map">
