@@ -126,6 +126,59 @@ const VacanciesPage = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="vacancies-loader">
+        <div className="loader-container">
+          <div className="loader-card">
+            <div className="loader-content">
+              <div className="loader-title"></div>
+              <div className="loader-text"></div>
+              <div className="loader-text"></div>
+              <div className="loader-button"></div>
+            </div>
+          </div>
+          <div className="loader-card">
+            <div className="loader-content">
+              <div className="loader-title"></div>
+              <div className="loader-text"></div>
+              <div className="loader-text"></div>
+              <div className="loader-button"></div>
+            </div>
+          </div>
+          <div className="loader-card">
+            <div className="loader-content">
+              <div className="loader-title"></div>
+              <div className="loader-text"></div>
+              <div className="loader-text"></div>
+              <div className="loader-button"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) return <div>{t("vacancies.error")}</div>;
+
+  if (!isLoading && filteredVacancies.length === 0) {
+    return (
+      <div className="vacancies-page">
+        <div className="container">
+          <div className="vacancies__empty">
+            <div className="vacancies__empty-content">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ff9b05" strokeWidth="2">
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <h3>{t("vacancies.no_vacancies_title")}</h3>
+              <p>{t("vacancies.no_vacancies_text")}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="vacancies-page">
       <div className="vacancies-page__search">
@@ -252,43 +305,6 @@ const VacanciesPage = () => {
           )}
         </div>
       </div>
-
-      {isLoading && (
-        <div className="vacancies-loader">
-          <div className="loader-container">
-            <div className="loader-card">
-              <div className="loader-content">
-                <div className="loader-title"></div>
-                <div className="loader-text"></div>
-                <div className="loader-text"></div>
-                <div className="loader-button"></div>
-              </div>
-            </div>
-            <div className="loader-card">
-              <div className="loader-content">
-                <div className="loader-title"></div>
-                <div className="loader-text"></div>
-                <div className="loader-text"></div>
-                <div className="loader-button"></div>
-              </div>
-            </div>
-            <div className="loader-card">
-              <div className="loader-content">
-                <div className="loader-title"></div>
-                <div className="loader-text"></div>
-                <div className="loader-text"></div>
-                <div className="loader-button"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {error && <p>{t("vacancies.error")}</p>}
-      {!isLoading && filteredVacancies.length === 0 && (
-        <div className="no-results">
-          <p>{t("vacancies.no_results")}</p>
-        </div>
-      )}
     </div>
   );
 };

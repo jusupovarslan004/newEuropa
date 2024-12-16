@@ -31,8 +31,50 @@ const Vacancies = () => {
     fetchVacancies();
   }, [i18n.language]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return (
+    <section className="vacancies">
+      <div className="container">
+        <h2 className="vacancies__title">{t("vacancies.title")}</h2>
+        <div className="vacancies-loader">
+          <div className="loader-container">
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="loader-card">
+                <div className="loader-image" />
+                <div className="loader-content">
+                  <div className="loader-title" />
+                  <div className="loader-text" />
+                  <div className="loader-text" />
+                  <div className="loader-text" />
+                  <div className="loader-text" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
   if (error) return <div>Error loading vacancies</div>;
+
+  if (!isLoading && (!vacancies || vacancies.length === 0)) {
+    return (
+      <section className="vacancies">
+        <div className="container">
+          <h2 className="vacancies__title">{t("vacancies.title")}</h2>
+          <div className="vacancies__empty">
+            <div className="vacancies__empty-content">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ff9b05" strokeWidth="2">
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <h3>{t("vacancies.no_vacancies_title")}</h3>
+              <p>{t("vacancies.no_vacancies_text")}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="vacancies">

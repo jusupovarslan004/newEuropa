@@ -5,13 +5,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
-// Временные импорты локальных иконок
-import emailIcon from "../../../assets/icons/email.svg";
-import phoneIcon from "../../../assets/icons/mobile.svg";
-import locationIcon from "../../../assets/icons/office.svg";
-import telegramIcon from "../../../assets/icons/telegram.svg";
-import whatsappIcon from "../../../assets/icons/whatsapp.svg";
-import instagramIcon from "../../../assets/icons/instagram.svg";
 
 const Footer = () => {
   const [contactData, setContactData] = useState(null);
@@ -51,8 +44,8 @@ const Footer = () => {
             {contactData?.mail && (
               <div className="footer__contact-item">
                 <div className="footer__contact-icon">
-                  {/* <img src={contactData.img_svg_api} alt="Email" /> */}
-                  <img src={emailIcon} alt="Email" />
+                  <img src={contactData.img_svg_api} alt="Email" />
+                  {/* <img src={emailIcon} alt="Email" /> */}
                 </div>
                 <a href={`mailto:${contactData.mail}`}>{contactData.mail}</a>
               </div>
@@ -62,8 +55,8 @@ const Footer = () => {
             {contactData?.Контакты?.map((contact) => (
               <div key={contact.id} className="footer__contact-item">
                 <div className="footer__contact-icon">
-                  {/* <img src={contact.img_svg_api} alt="Phone" /> */}
-                  <img src={phoneIcon} alt="Phone" />
+                  <img src={contact.img_svg_api} alt="Phone" />
+                  {/* <img src={phoneIcon} alt="Phone" /> */}
                 </div>
                 <div className="footer__phone-numbers">
                   <a href={`tel:${contact.phone}`}>{contact.phone}</a>
@@ -75,8 +68,8 @@ const Footer = () => {
             {contactData?.offices?.map((office) => (
               <div key={office.id} className="footer__contact-item">
                 <div className="footer__contact-icon">
-                  {/* <img src={office.img_svg_api} alt="Location" /> */}
-                  <img src={locationIcon} alt="Location" />
+                  <img src={office.img_svg_api} alt="Location" />
+                  {/* <img src={locationIcon} alt="Location" /> */}
                 </div>
                 <a 
                   href="https://go.2gis.com/er2bd" 
@@ -92,8 +85,8 @@ const Footer = () => {
             {contactData?.telegram?.map((item) => (
               <div key={item.id} className="footer__contact-item">
                 <div className="footer__contact-icon">
-                  {/* <img src={item.img_svg_api} alt="Telegram" /> */}
-                  <img src={telegramIcon} alt="Telegram" />
+                  <img src={item.img_svg_api} alt="Telegram" />
+                  {/* <img src={telegramIcon} alt="Telegram" /> */}
                 </div>
                 <a href={`https://t.me/${item.telegram.replace('@', '')}`}>
                   {item.telegram}
@@ -105,8 +98,8 @@ const Footer = () => {
             {contactData?.whatsapp?.map((item) => (
               <div key={item.id} className="footer__contact-item">
                 <div className="footer__contact-icon">
-                  {/* <img src={item.img_svg_api} alt="WhatsApp" /> */}
-                  <img src={whatsappIcon} alt="WhatsApp" />
+                  <img src={item.img_svg_api} alt="WhatsApp" />
+                  {/* <img src={whatsappIcon} alt="WhatsApp" /> */}
                 </div>
                 <a href={`https://wa.me/${item.whatsapp}`}>
                   {item.whatsapp}
@@ -118,8 +111,8 @@ const Footer = () => {
             {contactData?.instagram?.map((item) => (
               <div key={item.id} className="footer__contact-item">
                 <div className="footer__contact-icon">
-                  {/* <img src={item.img_svg_api} alt="Instagram" /> */}
-                  <img src={instagramIcon} alt="Instagram" />
+                  <img src={item.img_svg_api} alt="Instagram" />
+                  {/* <img src={instagramIcon} alt="Instagram" /> */}
                 </div>
                 <a href={item.instagram} target="_blank" rel="noopener noreferrer">
                   Instagram

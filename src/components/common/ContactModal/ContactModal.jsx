@@ -1,44 +1,38 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import './ContactModal.scss';
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import Modal from "../Modal/Modal";
+import SuccessModal from "../SuccessModal/SuccessModal";
+import "./ContactModal.scss";
 
-const ContactModal = ({ isOpen, onClose, onSuccess, prefilledCountry, vacancyId }) => {
+const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
+    fullname: '',
+    tell: '',
+    city: '',
+    country: country || '',
   });
+  
+  const [loading, setLoading] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [contactInfo, setContactInfo] = useState(null);
 
-  if (!isOpen) return null;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('https://api.togetherrecruitment.kg/api/v2/applications/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          country: prefilledCountry, // Используем страну из пропсов
-          vacancy_id: vacancyId
-        }),
-      });
-
-      if (response.ok) {
-        onSuccess();
-        setFormData({
-          name: '',
-          phone: '',
-          email: '',
-        });
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        const response = await fetch('https://api.togetherrecruitment.kg/api/v2/info/contacts/');
+        if (!response.ok) throw new Error('Failed to fetch contacts');
+        const data = await response.json();
+        setContactInfo(data[0]);
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
       }
-    } catch (error) {
-      console.error('Error submitting application:', error);
+    };
+
+    if (isOpen) {
+      fetchContactInfo();
     }
-  };
+  }, [isOpen]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,62 +42,152 @@ const ContactModal = ({ isOpen, onClose, onSuccess, prefilledCountry, vacancyId 
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      const response = await fetch(
+        "https://api.togetherrecruitment.kg/api/v2/info/appform_add/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            vacancy: vacancyId ? parseInt(vacancyId) : null,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        onClose();
+        setIsSuccessModalOpen(true);
+        setFormData({
+          fullname: '',
+          tell: '',
+          city: '',
+          country: '',
+        });
+        
+        // Автоматически закрываем SuccessModal через 3 секунды
+        // setTimeout(() => {
+        //   setIsSuccessModalOpen(false);
+        // }, 3000);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="contact-modal-overlay">
-      <div className="contact-modal">
-        <button className="contact-modal__close" onClick={onClose}>×</button>
-        <h3>{t("contact.title")}</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>{t("contact.name")}</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-              placeholder={t("contact.name_placeholder")}
-            />
+    <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className="contact-modal">
+          <button className="modal__close" onClick={onClose}>×</button>
+          
+          <div className="contact-info">
+            <h3>{t("contact.title")}</h3>
+            {contactInfo && (
+              <>
+                <div className="contact-item">
+                  <img src="/email-icon.svg" alt="Email" />
+                  <a href={`mailto:${contactInfo.mail}`}>{contactInfo.mail}</a>
+                </div>
+                {contactInfo.Контакты?.map((contact) => (
+                  <div key={contact.id} className="contact-item">
+                    <img src={contact.img_svg_api} alt="Phone" />
+                    <a href={`tel:${contact.phone}`}>{contact.phone}</a>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
-          <div className="form-group">
-            <label>{t("contact.phone")}</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              required
-              placeholder={t("contact.phone_placeholder")}
-            />
+
+          <div className="form-section">
+            <h3>{t("forms.contact.title")}</h3>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>{t("forms.contact.fullName")}</label>
+                <input
+                  type="text"
+                  name="fullname"
+                  value={formData.fullname}
+                  onChange={handleInputChange}
+                  placeholder={t("forms.contact.fullNamePlaceholder")}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>{t("forms.contact.phone")}</label>
+                <input
+                  type="tel"
+                  name="tell"
+                  value={formData.tell}
+                  onChange={handleInputChange}
+                  placeholder={t("forms.contact.phonePlaceholder")}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>{t("forms.contact.country")}</label>
+                <input
+                  type="text"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleInputChange}
+                  placeholder={t("forms.contact.countryPlaceholder")}
+                  disabled={!!country}
+                  className={country ? "disabled-input" : ""}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>{t("forms.contact.city")}</label>
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  placeholder={t("forms.contact.cityPlaceholder")}
+                />
+              </div>
+
+              {vacancyName && (
+                <div className="form-group">
+                  <label>{t("forms.contact.vacancy")}</label>
+                  <input
+                    type="text"
+                    value={vacancyName}
+                    disabled
+                    className="disabled-input"
+                  />
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className={`submit-button ${loading ? "loading" : ""}`}
+                disabled={loading}
+              >
+                {loading ? "" : t("forms.contact.submit")}
+              </button>
+            </form>
           </div>
-          <div className="form-group">
-            <label>{t("contact.email")}</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              placeholder={t("contact.email_placeholder")}
-            />
-          </div>
-          <div className="form-group">
-            <label>{t("contact.country")}</label>
-            <input
-              type="text"
-              value={prefilledCountry}
-              readOnly
-              disabled
-              className="disabled-input"
-            />
-          </div>
-          <button type="submit" className="button button--primary">
-            {t("contact.submit")}
-          </button>
-        </form>
-      </div>
-    </div>
+        </div>
+      </Modal>
+
+      <SuccessModal 
+        isOpen={isSuccessModalOpen}
+        onClose={() => setIsSuccessModalOpen(false)}
+      />
+    </>
   );
 };
 
-export default ContactModal; 
+export default ContactModal;

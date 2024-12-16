@@ -4,7 +4,7 @@ import "./Hero.scss";
 import heroBg1 from "../../../assets/images/heroBg1.jpg";
 import heroBg2 from "../../../assets/images/heroBg2.jpg";
 import heroBg3 from "../../../assets/images/heroBg3.jpg";
-import ContactModal from "../../common/Modal/ContactModal";
+import ContactModal from "../../common/ContactModal/ContactModal";
 
 const Hero = () => {
   const { t } = useTranslation();

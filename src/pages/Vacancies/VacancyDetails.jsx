@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import "./VacancyDetails.scss";
-import ContactModal from "../../components/common/Modal/ContactModal";
+import ContactModal from "../../components/common/ContactModal/ContactModal";
 import SuccessModal from "../../components/common/SuccessModal/SuccessModal";
 
 const VacancyDetails = () => {
@@ -122,7 +122,23 @@ const VacancyDetails = () => {
     setIsSuccessModalOpen(true);
   };
 
-  if (loading) return <div>{t("vacancy.loading")}</div>;
+  if (loading) return (
+    <div className="vacancies-loader">
+      <div className="loader-container">
+        <div className="loader-card">
+          <div className="loader-image" />
+          <div className="loader-content">
+            <div className="loader-title" />
+            <div className="loader-text" />
+            <div className="loader-text" />
+            <div className="loader-text" />
+            <div className="loader-text" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   if (error) return <div>{t("vacancy.error.general", { error })}</div>;
 
   return (

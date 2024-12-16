@@ -483,3 +483,31 @@
     margin: 16px 0;
   }
 }
+
+.vacancies-loader {
+  width: 100%;
+  padding: 20px;
+  margin-top: 100px;
+  
+  .loader-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .loader-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 280px;
+    display: flex;
+    animation: cardPulse 1.5s infinite;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// Адаптивность для мобильных устройств
+@media (max-width: 768px) {
+  .vacancies-loader {
+    margin-top: 80px;
+  }
+}

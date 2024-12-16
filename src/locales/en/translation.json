@@ -28,17 +28,18 @@
       "errorCheck": "Please check your input and try again"
     },
     "contact": {
-      "title": "Submit Application for Vacancy",
-      "fullName": "Your Full Name",
-      "fullNamePlaceholder": "Enter Full Name",
-      "phone": "Your Phone Number",
-      "phonePlaceholder": "+",
+      "title": "Contacts",
+      "titleForms": "Fill out this form and we will contact you!",
+      "fullName": "Full name",
+      "fullNamePlaceholder": "Enter your full name",
+      "phone": "Phone number",
+      "phonePlaceholder": "Example: +",
       "country": "Country you want to apply to",
-      "countryPlaceholder": "Enter country",
-      "city": "Your City",
-      "cityPlaceholder": "Enter city",
+      "countryPlaceholder": "Select country",
+      "city": "Your city",
+      "cityPlaceholder": "Enter your city",
       "vacancy": "Vacancy",
-      "submit": "Submit Application",
+      "submit": "Submit application",
       "sending": "Sending...",
       "error": "An error occurred while sending. Please try again.",
       "success": {
@@ -155,13 +156,9 @@
     },
     "no_results": "No vacancies found",
     "loading": "Loading vacancies...",
-    "error": "Error loading vacancies"
-
-
-
-
-
-    
+    "error": "Error loading vacancies",
+    "no_vacancies_title": "No vacancies found",
+    "no_vacancies_text": "There are currently no available vacancies. Please check back later."
   },
   "vacancy": {
     "title": "Vacancies",

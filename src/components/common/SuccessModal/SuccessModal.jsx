@@ -4,8 +4,7 @@ import './SuccessModal.scss';
 
 const SuccessModal = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
-
-
+  
   if (!isOpen) return null;
 
   return (
