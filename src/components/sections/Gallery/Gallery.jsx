@@ -16,7 +16,7 @@ const Gallery = () => {
   const minSwipeDistance = 50;
 
   useEffect(() => {
-    fetch("/api/v2/info/gallery")
+    fetch("https://api.togetherrecruitment.kg/api/v2/info/gallery/")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

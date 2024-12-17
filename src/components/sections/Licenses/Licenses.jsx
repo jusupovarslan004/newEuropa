@@ -20,7 +20,7 @@ const Licenses = () => {
   const minSwipeDistance = 50;
 
   useEffect(() => {
-    fetch("/api/v2/info/license")
+    fetch("https://api.togetherrecruitment.kg/api/v2/info/license/")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
