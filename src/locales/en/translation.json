@@ -29,6 +29,7 @@
     },
     "contact": {
       "title": "Contacts",
+      "ourAddress": "Our address",
       "titleForms": "Fill out this form and we will contact you!",
       "fullName": "Full name",
       "fullNamePlaceholder": "Enter your full name",

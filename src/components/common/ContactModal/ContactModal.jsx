@@ -16,6 +16,7 @@ const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
   const [loading, setLoading] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [contactInfo, setContactInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchContactInfo = async () => {
@@ -44,7 +45,7 @@ const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     
     try {
       const response = await fetch(
@@ -72,14 +73,28 @@ const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
         });
         
         // Автоматически закрываем SuccessModal через 3 секунды
-        // setTimeout(() => {
-        //   setIsSuccessModalOpen(false);
-        // }, 3000);
+        setTimeout(() => {
+          setIsSuccessModalOpen(false);
+        }, 3000);
       }
     } catch (error) {
       console.error('Error:', error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
+    }
+  };
+
+  const formatAddress = (address) => {
+    if (window.innerWidth <= 768) {
+      return (
+        <>
+          {t("forms.contact.ourAddress")}
+          <br />
+
+        </>
+      );
+    } else {
+      return `${t("forms.contact.ourAddress")}`;
     }
   };
 
@@ -90,25 +105,72 @@ const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
           <button className="modal__close" onClick={onClose}>×</button>
           
           <div className="contact-info">
-            <h3>{t("contact.title")}</h3>
+            <h3>{t("forms.contact.title")}</h3>
             {contactInfo && (
-              <>
-                <div className="contact-item">
+              <div className="contact-links">
+                {/* Email */}
+                <div className="contact-item contact-item-inline">
                   <img src="/email-icon.svg" alt="Email" />
                   <a href={`mailto:${contactInfo.mail}`}>{contactInfo.mail}</a>
                 </div>
+
+                {/* Phone */}
                 {contactInfo.Контакты?.map((contact) => (
-                  <div key={contact.id} className="contact-item">
+                  <div key={contact.id} className="contact-item contact-item-inline">
                     <img src={contact.img_svg_api} alt="Phone" />
                     <a href={`tel:${contact.phone}`}>{contact.phone}</a>
                   </div>
                 ))}
-              </>
+
+                {/* Telegram */}
+                {contactInfo.telegram?.map((item) => (
+                  <div key={item.id} className="contact-item contact-item-inline">
+                    <img src={item.img_svg_api} alt="Telegram" />
+                    <a href={`https://t.me/${item.telegram.replace('@', '')}`} target="_blank" rel="noopener noreferrer">
+                      {item.telegram}
+                    </a>
+                  </div>
+                ))}
+
+                {/* WhatsApp */}
+                {contactInfo.whatsapp?.map((item) => (
+                  <div key={item.id} className="contact-item contact-item-inline">
+                    <img src={item.img_svg_api} alt="WhatsApp" />
+                    <a href={`https://wa.me/${item.whatsapp.replace('+', '')}`} target="_blank" rel="noopener noreferrer">
+                      {item.whatsapp}
+                    </a>
+                  </div>
+                ))}
+                {/* Офисы */}
+                {contactInfo?.offices?.map((office) => (
+                  <div key={office.id} className="contact-item">
+                    <img src={office.img_svg_api} alt="Location" />
+                    <a 
+                      href={office.map_link || "https://go.2gis.com/er2bd"} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      {formatAddress(office.address)}
+                    </a>
+                  </div>
+                ))}
+
+                {/* Instagram */}
+                {contactInfo.instagram?.map((item) => (
+                  <div key={item.id} className="contact-item contact-item-inline">
+                    <img src={item.img_svg_api} alt="Instagram" />
+                    <a href={item.instagram} target="_blank" rel="noopener noreferrer">
+                      Instagram
+                    </a>
+                  </div>
+                ))}
+              </div>
+              
             )}
           </div>
 
           <div className="form-section">
-            <h3>{t("forms.contact.title")}</h3>
+            <h3>{t("forms.contact.titleForms")}</h3>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>{t("forms.contact.fullName")}</label>

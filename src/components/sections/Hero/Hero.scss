@@ -18,21 +18,6 @@
       opacity: 1;
     }
   }
-
-  &__overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.4) 100%
-    );
-    z-index: 1;
-  }
-
   &__container {
     max-width: 1300px;
     margin: 0 auto;

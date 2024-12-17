@@ -31,7 +31,7 @@ const Hero = () => {
           style={{ backgroundImage: `url(${img})` }}
         />
       ))}
-      <div className="hero__overlay" />
+
       <div className="hero__container">
         <div className="hero__content">
           <h1 className="hero__title">{t("hero.title")}</h1>
