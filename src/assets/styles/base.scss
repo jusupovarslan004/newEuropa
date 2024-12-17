@@ -7,6 +7,14 @@
 
 .h2 {
   @include h2;
+  
+  &--gradient {
+    @include h2;
+    background: linear-gradient(135deg, #eae8e8 0%, #fd2929 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
 
 .h3 {
@@ -19,29 +27,17 @@
   &--medium {
     @include h3-medium;
   }
-
-  &--regular {
-    @include h3-regular;
-  }
 }
 
 .h4 {
   @include h4;
-}
 
-.h5 {
-  @include h5;
-
-  &--medium {
-    @include h5-medium;
+  &--bold {
+    @include h4-bold;
   }
-}
-
-.h6 {
-  @include h6;
 
   &--medium {
-    @include h6-medium;
+    @include h4-medium;
   }
 }
 
@@ -82,4 +78,43 @@ body {
   .container {
     max-width: 576px;
   }
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+}
+
+// Оптимизация рендеринга шрифтов
+@mixin font-face($weight) {
+  @font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: $weight;
+    font-display: swap;
+    src: local('Montserrat');
+  }
+
+  @font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: $weight;
+    font-display: swap;
+    src: local('Open Sans');
+  }
+}
+
+// Генерируем @font-face для разных весов
+@each $weight in (400, 500, 600, 700) {
+  @include font-face($weight);
+}
+
+// Сглаживание шрифтов
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }

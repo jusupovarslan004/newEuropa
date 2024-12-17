@@ -24,7 +24,7 @@ const Header = () => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Закрываем меню при изменении ма��шрута
+  // Закрываем меню при изменени�� машрута
   useEffect(() => {
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
@@ -65,6 +65,17 @@ const Header = () => {
     i18n.changeLanguage(lang.code);
     localStorage.setItem("language", lang.code);
     setIsLangOpen(false);
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+    setIsMenuOpen(false);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'unset';
   };
 
   const renderLanguageSelector = () => (
@@ -143,10 +154,7 @@ const Header = () => {
               {renderLanguageSelector()}
               <button
                 className="button button--primary"
-                onClick={() => {
-                  setIsModalOpen(true);
-                  setIsMenuOpen(false);
-                }}
+                onClick={handleModalOpen}
               >
                 {t("header.submitRequest")}
               </button>
@@ -169,7 +177,7 @@ const Header = () => {
             {renderLanguageSelector()}
             <button
               className="button button--primary"
-              onClick={() => setIsModalOpen(true)}
+              onClick={handleModalOpen}
             >
               {t("header.submitRequest")}
             </button>
@@ -179,7 +187,7 @@ const Header = () => {
 
       <ContactModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleModalClose}
       />
     </header>
   );

@@ -63,7 +63,6 @@ const VacanciesPage = () => {
     const fetchAllVacancies = async () => {
       const currentLang = i18n.language === "kg" ? "ky" : i18n.language;
       try {
-        setIsLoading(true);
         const response = await fetch(
           `https://api.togetherrecruitment.kg/api/v2/info/vacancies/?page_size=all&lang=${currentLang}`
         );
@@ -74,8 +73,6 @@ const VacanciesPage = () => {
         setAllVacancies(data || []);
       } catch (error) {
         console.error("Error fetching all vacancies:", error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -86,10 +83,16 @@ const VacanciesPage = () => {
 
   const filteredVacancies = search.trim() !== "" || selectedCountry !== "all"
     ? allVacancies.filter(vacancy => {
+        const searchTerm = search.trim().toLowerCase();
         const matchesSearch = search.trim() === "" || 
-          vacancy.title.toLowerCase().includes(search.toLowerCase());
+          (vacancy.title?.toLowerCase()?.includes(searchTerm) || false) ||
+          (vacancy.country?.toLowerCase()?.includes(searchTerm) || false) ||
+          (vacancy.program?.toLowerCase()?.includes(searchTerm) || false) ||
+          (vacancy.specialization?.toLowerCase()?.includes(searchTerm) || false);
+        
         const matchesCountry = selectedCountry === "all" || 
           vacancy.country === selectedCountry;
+          
         return matchesSearch && matchesCountry;
       })
     : vacancies;
@@ -161,7 +164,7 @@ const VacanciesPage = () => {
 
   if (error) return <div>{t("vacancies.error")}</div>;
 
-  if (!isLoading && filteredVacancies.length === 0) {
+  if (!isLoading && filteredVacancies.length === 0 && search.trim() === "" && selectedCountry === "all") {
     return (
       <div className="vacancies-page">
         <div className="container">

@@ -71,7 +71,8 @@ const Gallery = () => {
   };
 
   const goToSlide = (index) => {
-    setCurrentSlide(index);
+    const slidesPerGroup = Math.ceil(gallery.length / 3);
+    setCurrentSlide(index * slidesPerGroup);
     setActiveDot(index);
   };
 
@@ -98,21 +99,40 @@ const Gallery = () => {
   };
 
   const renderSlides = () => {
-    return Array.from({ length: slidesPerView }).map((_, offset) => {
-      const slideIndex = (currentSlide + offset) % gallery.length;
+    if (gallery.length === 0) return null;
+
+    if (gallery.length <= 3) {
+      return gallery.map((item, index) => (
+        <div key={`gallery-${index}`} className="gallery__slide">
+          <img
+            className="gallery__image"
+            src={item.photo_api.replace(/[<>]/g, "")}
+            alt={`Gallery ${index + 1}`}
+            onError={(e) => {
+              console.error("Error loading image:", e);
+              e.target.src = "placeholder.jpg";
+            }}
+          />
+        </div>
+      ));
+    }
+
+    const visibleSlides = Math.min(gallery.length, slidesPerView);
+    const startIndex = currentSlide;
+
+    return Array.from({ length: visibleSlides }).map((_, index) => {
+      const slideIndex = (startIndex + index) % gallery.length;
       return (
-        <div key={slideIndex} className="gallery__slide">
-          {gallery[slideIndex] && (
-            <img
-              className="gallery__image"
-              src={gallery[slideIndex].photo_api.replace(/[<>]/g, "")}
-              alt={`Gallery ${slideIndex + 1}`}
-              onError={(e) => {
-                console.error("Error loading image:", e);
-                e.target.src = "placeholder.jpg";
-              }}
-            />
-          )}
+        <div key={`gallery-${slideIndex}`} className="gallery__slide">
+          <img
+            className="gallery__image"
+            src={gallery[slideIndex].photo_api.replace(/[<>]/g, "")}
+            alt={`Gallery ${slideIndex + 1}`}
+            onError={(e) => {
+              console.error("Error loading image:", e);
+              e.target.src = "placeholder.jpg";
+            }}
+          />
         </div>
       );
     });
@@ -142,46 +162,50 @@ const Gallery = () => {
       <div className="gallery__container">
         <h2 className="gallery__title">{t("gallery.title")}</h2>
         <div
-          className="gallery__slider"
+          className={`gallery__slider ${
+            gallery.length <= 3 ? 'gallery__slider--few-items' : ''
+          }`}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           {renderSlides()}
 
-          {slidesPerView > 1 && gallery.length > slidesPerView && (
+          {gallery.length > 3 && (
             <>
               <button
                 className="gallery__nav-button gallery__nav-button--prev"
                 onClick={prevSlide}
                 aria-label={t("gallery.previousSlide")}
               >
-                ←
+                <span>←</span>
               </button>
               <button
                 className="gallery__nav-button gallery__nav-button--next"
                 onClick={nextSlide}
                 aria-label={t("gallery.nextSlide")}
               >
-                →
+                <span>→</span>
               </button>
             </>
           )}
         </div>
 
-        <div className="gallery__dots">
-          {[0, 1, 2].map((index) => (
-            <div
-              key={index}
-              className={`gallery__dot ${
-                activeDot === index ? "gallery__dot--active" : ""
-              }`}
-              onClick={() => goToSlide(index)}
-              role="button"
-              aria-label={t("gallery.goToSlide", { number: index + 1 })}
-            />
-          ))}
-        </div>
+        {gallery.length > 3 && (
+          <div className="gallery__dots">
+            {[0, 1, 2].map((index) => (
+              <div
+                key={index}
+                className={`gallery__dot ${
+                  activeDot === index ? "gallery__dot--active" : ""
+                }`}
+                onClick={() => goToSlide(index)}
+                role="button"
+                aria-label={t("gallery.goToSlide", { number: index + 1 })}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

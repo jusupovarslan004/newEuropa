@@ -39,6 +39,10 @@
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: 24px;
+    background: linear-gradient(135deg, #eae8e8 0%, #737373 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   &__description {

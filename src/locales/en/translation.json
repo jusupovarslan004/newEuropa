@@ -46,7 +46,8 @@
       "success": {
         "title": "Your application has been successfully submitted!",
         "message": "We will contact you soon"
-      }
+      },
+      "loading": "Loading..."
     },
     "success": {
         "title": "Your application has been successfully submitted!",

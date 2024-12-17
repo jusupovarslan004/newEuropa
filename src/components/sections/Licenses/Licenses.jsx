@@ -75,7 +75,8 @@ const Licenses = () => {
   };
 
   const goToSlide = (index) => {
-    setCurrentSlide(index);
+    const slidesPerGroup = Math.ceil(licenses.length / 3);
+    setCurrentSlide(index * slidesPerGroup);
     setActiveDot(index);
   };
 
@@ -104,21 +105,25 @@ const Licenses = () => {
 
   // Обновляем рендер слайдов
   const renderSlides = () => {
-    return Array.from({ length: slidesPerView }).map((_, offset) => {
-      const slideIndex = (currentSlide + offset) % licenses.length;
+    if (licenses.length === 0) return null;
+
+    // Определяем, сколько слайдов показывать
+    const visibleSlides = Math.min(licenses.length, slidesPerView);
+    const startIndex = currentSlide;
+
+    return Array.from({ length: visibleSlides }).map((_, index) => {
+      const slideIndex = (startIndex + index) % licenses.length;
       return (
         <div key={`license-${slideIndex}`} className="licenses__slide">
-          {licenses[slideIndex] && (
-            <img
-              className="licenses__image"
-              src={licenses[slideIndex].license_api.replace(/[<>]/g, "")}
-              alt={`License ${slideIndex + 1}`}
-              onError={(e) => {
-                console.error("Error loading image:", e);
-                e.target.src = "placeholder.jpg";
-              }}
-            />
-          )}
+          <img
+            className="licenses__image"
+            src={licenses[slideIndex].license_api.replace(/[<>]/g, "")}
+            alt={`License ${slideIndex + 1}`}
+            onError={(e) => {
+              console.error("Error loading image:", e);
+              e.target.src = "placeholder.jpg";
+            }}
+          />
         </div>
       );
     });
@@ -148,46 +153,50 @@ const Licenses = () => {
       <div className="licenses__container">
         <h2 className="licenses__title">{t("licenses.title")}</h2>
         <div
-          className="licenses__slider"
+          className={`licenses__slider ${
+            licenses.length <= 4 ? 'licenses__slider--few-items' : ''
+          }`}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           {renderSlides()}
 
-          {slidesPerView > 1 && licenses.length > slidesPerView && (
+          {licenses.length > slidesPerView && (
             <>
               <button
                 className="licenses__nav-button licenses__nav-button--prev"
                 onClick={prevSlide}
                 aria-label={t("licenses.previousSlide")}
               >
-                ←
+                <span>←</span>
               </button>
               <button
                 className="licenses__nav-button licenses__nav-button--next"
                 onClick={nextSlide}
                 aria-label={t("licenses.nextSlide")}
               >
-                →
+                <span>→</span>
               </button>
             </>
           )}
         </div>
 
-        <div className="licenses__dots">
-          {[0, 1, 2].map((index) => (
-            <div
-              key={index}
-              className={`licenses__dot ${
-                activeDot === index ? "licenses__dot--active" : ""
-              }`}
-              onClick={() => goToSlide(index)}
-              role="button"
-              aria-label={t("licenses.goToSlide", { number: index + 1 })}
-            />
-          ))}
-        </div>
+        {licenses.length > slidesPerView && (
+          <div className="licenses__dots">
+            {[0, 1, 2].map((index) => (
+              <div
+                key={index}
+                className={`licenses__dot ${
+                  activeDot === index ? "licenses__dot--active" : ""
+                }`}
+                onClick={() => goToSlide(index)}
+                role="button"
+                aria-label={t("licenses.goToSlide", { number: index + 1 })}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

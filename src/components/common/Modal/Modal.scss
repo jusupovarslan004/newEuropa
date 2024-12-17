@@ -1,3 +1,8 @@
+body.modal-open {
+  overflow: hidden !important;
+  padding-right: calc(100vw - 100%);
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -7,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 2000;
 
   &__overlay {
     position: absolute;
@@ -19,16 +24,14 @@
   }
 
   &__content {
-    position: absolute;
+    position: relative;
     background: white;
     display: flex;
     width: 90%;
     max-width: 800px;
     overflow: hidden;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 20px;
+    z-index: 2001;
 
     @media (max-width: 768px) {
       width: 90%;
