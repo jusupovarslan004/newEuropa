@@ -1,25 +1,29 @@
 import { useTranslation } from "react-i18next";
 import "./HowWeWork.scss";
-import documentIcon from "../../../assets/icons/document.svg";
+import one from '../../../assets/icons/one.svg'
+import two from '../../../assets/icons/two.svg'
+import three from '../../../assets/icons/Invitation.svg'
+import visa from '../../../assets/icons/visa.svg'
+
 
 const HowWeWork = () => {
   const { t } = useTranslation();
 
   const steps = [
     {
-      icon: documentIcon,
+      icon: one,
       titleKey: "1",
     },
     {
-      icon: documentIcon,
+      icon: two,
       titleKey: "2",
     },
     {
-      icon: documentIcon,
+      icon: three,
       titleKey: "3",
     },
     {
-      icon: documentIcon,
+      icon: visa,
       titleKey: "4",
     },
   ];

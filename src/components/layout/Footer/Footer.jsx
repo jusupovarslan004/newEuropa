@@ -29,17 +29,22 @@ const Footer = () => {
     if (!mapRef.current || !window.DG) return;
 
     window.DG.then(() => {
-      // Координаты для Абдумомунова 221
-      const coordinates = [42.876829, 74.612374];
+      // Точные координаты Together Recruitment с 2GIS
+      const coordinates = [42.88025, 74.594849];
       
       const map = window.DG.map(mapRef.current, {
         center: coordinates,
-        zoom: 17, // Увеличим зум для лучшей видимости здания
+        zoom: 17, // Увеличенный зум для лучшей видимости здания
       });
 
       window.DG.marker(coordinates)
         .addTo(map)
-        .bindPopup("Together recruitment<br>Абдумомунова, 221<br>301 кабинет, 3 этаж");
+        .bindPopup(`
+          <b>Together Recruitment</b><br>
+          Абдумомунова, 221<br>
+          301 кабинет, 3 этаж<br>
+          Первомайский район, Бишкек
+        `);
 
       return () => {
         map.remove();
