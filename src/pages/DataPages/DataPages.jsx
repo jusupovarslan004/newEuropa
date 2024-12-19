@@ -100,6 +100,7 @@ const DataPages = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    post('')
     setShowSuccessModal(true);
   };
 

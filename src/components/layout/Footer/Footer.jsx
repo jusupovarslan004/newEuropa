@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
 import "./Footer.scss";
 import logo from "../../../assets/images/logo.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import DG from "2gis-maps";
 
 
 const Footer = () => {
   const [contactData, setContactData] = useState(null);
   const { t } = useTranslation();
+  const mapRef = useRef(null);
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -21,6 +23,28 @@ const Footer = () => {
     };
 
     fetchContacts();
+  }, []);
+
+  useEffect(() => {
+    if (!mapRef.current || !window.DG) return;
+
+    window.DG.then(() => {
+      // Координаты для Абдумомунова 221
+      const coordinates = [42.876829, 74.612374];
+      
+      const map = window.DG.map(mapRef.current, {
+        center: coordinates,
+        zoom: 17, // Увеличим зум для лучшей видимости здания
+      });
+
+      window.DG.marker(coordinates)
+        .addTo(map)
+        .bindPopup("Together recruitment<br>Абдумомунова, 221<br>301 кабинет, 3 этаж");
+
+      return () => {
+        map.remove();
+      };
+    });
   }, []);
 
   return (
@@ -122,14 +146,7 @@ const Footer = () => {
           </div>
 
           <div className="footer__map">
-            <iframe
-              src="https://widgets.2gis.com/widget?type=firmsonmap&options=%7B%22pos%22%3A%7B%22lat%22%3A42.8807128066996%2C%22lon%22%3A74.59485054016115%2C%22zoom%22%3A16%7D%2C%22opt%22%3A%7B%22city%22%3A%22bishkek%22%7D%2C%22org%22%3A%2270000001095143728%22%7D"
-              width="100%"
-              height="100%"
-              frameBorder="0"
-              style={{ border: 0 }}
-              allowFullScreen
-            />
+            <div ref={mapRef} style={{ width: '100%', height: '100%' }}></div>
           </div>
         </div>
       </div>

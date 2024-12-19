@@ -6,6 +6,7 @@ import "./ContactModal.scss";
 
 const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullname: '',
     tell: '',
@@ -13,10 +14,8 @@ const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
     country: country || '',
   });
   
-  const [loading, setLoading] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [contactInfo, setContactInfo] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchContactInfo = async () => {
@@ -72,7 +71,6 @@ const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
           country: '',
         });
         
-        // Автоматически закрываем SuccessModal через 3 секунды
         setTimeout(() => {
           setIsSuccessModalOpen(false);
         }, 3000);
@@ -234,10 +232,17 @@ const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
 
               <button
                 type="submit"
-                className={`submit-button ${loading ? "loading" : ""}`}
-                disabled={loading}
+                className={`submit-button ${isLoading ? "loading" : ""}`}
+                disabled={isLoading}
               >
-                {loading ? "" : t("forms.contact.submit")}
+                {isLoading ? (
+                  <div className="button-loader">
+                    <div className="spinner"></div>
+                    {t("forms.contact.submitting")}
+                  </div>
+                ) : (
+                  t("forms.contact.submit")
+                )}
               </button>
             </form>
           </div>

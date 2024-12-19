@@ -10,9 +10,11 @@ import Partners from "./pages/Partners/Partners";
 import "./assets/styles/reset.scss";
 import "./assets/styles/base.scss";
 import DataPages from "./pages/DataPages/DataPages";
+import { useEffect } from "react";
 
 
 function App() {
+  
   return (
     <Router>
       <div className="app">
@@ -26,7 +28,7 @@ function App() {
             <Route path="/vacancies" element={<VacanciesPage />} />
             <Route path="/vacancies/:id" element={<VacancyDetails />} />
             <Route path="/partners" element={<Partners />} />
-            <Route path="/ars" element={<DataPages />} />
+            <Route path="/form/:link" element={<DataPages />} />
 
           </Routes>
         </main>

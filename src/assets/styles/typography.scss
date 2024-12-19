@@ -80,18 +80,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Стили заголовков
+// Стили заголовков без принудительного цвета
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-heading;
   font-weight: map-get($font-weights, bold);
   line-height: 1.2;
   margin-bottom: 1rem;
-  background-color: black;
-  
-  // Градиентный текст для заголовков
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 h1 {
