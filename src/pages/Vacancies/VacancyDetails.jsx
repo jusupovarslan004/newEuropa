@@ -110,6 +110,12 @@ const VacancyDetails = () => {
   };
 
   const handleApplyClick = () => {
+    console.log('Opening modal with:', {
+      country: vacancy?.country,
+      vacancyName: vacancy?.title,
+      vacancyId: id
+    });
+    
     setIsContactModalOpen(true);
   };
 
@@ -254,9 +260,9 @@ const VacancyDetails = () => {
         isOpen={isContactModalOpen}
         onClose={handleModalClose}
         onSuccess={handleApplicationSuccess}
-        country={vacancy?.country}
-        vacancyName={vacancy?.title}
-        vacancyId={id}
+        country={vacancy?.country || ''}
+        vacancyName={vacancy?.title || ''}
+        vacancyId={id ? parseInt(id) : null}
       />
       
       <SuccessModal 

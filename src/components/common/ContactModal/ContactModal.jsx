@@ -34,6 +34,20 @@ const ContactModal = ({ isOpen, onClose, country, vacancyName, vacancyId }) => {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (country) {
+      setFormData(prev => ({
+        ...prev,
+        country: country
+      }));
+    }
+  }, [country]);
+
+  useEffect(() => {
+    console.log('Modal props:', { country, vacancyName, vacancyId });
+    console.log('Form data:', formData);
+  }, [country, vacancyName, vacancyId, formData]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
